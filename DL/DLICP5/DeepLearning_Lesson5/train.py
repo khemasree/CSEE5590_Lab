@@ -14,11 +14,13 @@ from tensorflow.contrib import learn
 # ==================================================
 
 # Data loading params
+# took 100 lines of input from fashion and finance datasets and copied to input and input2 files
 tf.flags.DEFINE_float("dev_sample_percentage", .1, "Percentage of the training data to use for validation")
 tf.flags.DEFINE_string("positive_data_file", "./ICP_data/input.txt", "Data source for the positive data.")
 tf.flags.DEFINE_string("negative_data_file", "./ICP_data/input2.txt", "Data source for the negative data.")
 
 # Model Hyperparameters
+#Modified all the parameter values
 tf.flags.DEFINE_integer("embedding_dim", 128, "Dimensionality of character embedding (default: 128)")
 tf.flags.DEFINE_string("filter_sizes", "1,2,3", "Comma-separated filter sizes (default: '3,4,5')")
 tf.flags.DEFINE_integer("num_filters", 32, "Number of filters per filter size (default: 128)")
@@ -91,6 +93,7 @@ with tf.Graph().as_default():
 
         # Define Training procedure
         global_step = tf.Variable(0, name="global_step", trainable=False)
+        #Trained the model for different optimizers and checked the loss
         optimizer = tf.train.GradientDescentOptimizer(1e-3)
         grads_and_vars = optimizer.compute_gradients(cnn.loss)
         train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step)
